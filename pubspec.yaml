@@ -35,6 +35,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +60,101 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/tiles/12/
+    - assets/tiles/13/
+    - assets/tiles/14/
+    - assets/tiles/15/
+    - assets/tiles/16/
+    - assets/tiles/17/
+    - assets/tiles/18/
+    - assets/tiles/12/2398/
+    - assets/tiles/12/2399/
+    - assets/tiles/13/4797/
+    - assets/tiles/13/4798/
+    - assets/tiles/14/9594/
+    - assets/tiles/14/9595/
+    - assets/tiles/14/9596/
+    - assets/tiles/14/9597/
+    - assets/tiles/15/19189/
+    - assets/tiles/15/19190/
+    - assets/tiles/15/19191/
+    - assets/tiles/15/19192/
+    - assets/tiles/15/19193/
+    - assets/tiles/15/19194/
+    - assets/tiles/16/38378/
+    - assets/tiles/16/38379/
+    - assets/tiles/16/38380/
+    - assets/tiles/16/38381/
+    - assets/tiles/16/38382/
+    - assets/tiles/16/38383/
+    - assets/tiles/16/38384/
+    - assets/tiles/16/38385/
+    - assets/tiles/16/38386/
+    - assets/tiles/16/38387/
+    - assets/tiles/16/38388/
+    - assets/tiles/17/76756/
+    - assets/tiles/17/76757/
+    - assets/tiles/17/76758/
+    - assets/tiles/17/76759/
+    - assets/tiles/17/76760/
+    - assets/tiles/17/76761/
+    - assets/tiles/17/76762/
+    - assets/tiles/17/76763/
+    - assets/tiles/17/76764/
+    - assets/tiles/17/76765/
+    - assets/tiles/17/76766/
+    - assets/tiles/17/76767/
+    - assets/tiles/17/76768/
+    - assets/tiles/17/76769/
+    - assets/tiles/17/76770/
+    - assets/tiles/17/76771/
+    - assets/tiles/17/76772/
+    - assets/tiles/17/76773/
+    - assets/tiles/17/76774/
+    - assets/tiles/17/76775/
+    - assets/tiles/17/76776/
+    - assets/tiles/18/153512/
+    - assets/tiles/18/153513/
+    - assets/tiles/18/153514/
+    - assets/tiles/18/153515/
+    - assets/tiles/18/153516/
+    - assets/tiles/18/153517/
+    - assets/tiles/18/153518/
+    - assets/tiles/18/153519/
+    - assets/tiles/18/153520/
+    - assets/tiles/18/153521/
+    - assets/tiles/18/153522/
+    - assets/tiles/18/153523/
+    - assets/tiles/18/153524/
+    - assets/tiles/18/153525/
+    - assets/tiles/18/153526/
+    - assets/tiles/18/153527/
+    - assets/tiles/18/153528/
+    - assets/tiles/18/153529/
+    - assets/tiles/18/153530/
+    - assets/tiles/18/153531/
+    - assets/tiles/18/153532/
+    - assets/tiles/18/153533/
+    - assets/tiles/18/153534/
+    - assets/tiles/18/153535/
+    - assets/tiles/18/153536/
+    - assets/tiles/18/153537/
+    - assets/tiles/18/153538/
+    - assets/tiles/18/153539/
+    - assets/tiles/18/153540/
+    - assets/tiles/18/153541/
+    - assets/tiles/18/153542/
+    - assets/tiles/18/153543/
+    - assets/tiles/18/153544/
+    - assets/tiles/18/153545/
+    - assets/tiles/18/153546/
+    - assets/tiles/18/153547/
+    - assets/tiles/18/153548/
+    - assets/tiles/18/153549/
+    - assets/tiles/18/153550/
+    - assets/tiles/18/153551/
+    - assets/tiles/18/153552/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
