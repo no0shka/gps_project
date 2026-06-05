@@ -7,6 +7,7 @@ void main() => runApp(MaterialApp(home: GPS()));
 
 class GPS extends StatefulWidget {
   const GPS({super.key});
+
   @override
   State<GPS> createState() => _GPSState();
 }
@@ -15,28 +16,40 @@ class _GPSState extends State<GPS> {
   String status = "Checking...";
   double? lat;
   double? lng;
+
+  // Aya
+  String movement = "Waiting...";
+  // Aya
+
   List<LatLng> routePoints = [];
   bool isTracking = false;
 
   Future<void> _determinePosition() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
     if (!serviceEnabled) {
       setState(() => status = "Please turn on GPS");
       return;
     }
+
     LocationPermission permission = await Geolocator.checkPermission();
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+
       if (permission == LocationPermission.denied) {
         setState(() => status = "Permission Denied");
         return;
       }
     }
+
     if (permission == LocationPermission.deniedForever) {
       setState(() => status = "Permission denied forever");
       return;
     }
+
     Position position = await Geolocator.getCurrentPosition();
+
     setState(() {
       lat = position.latitude;
       lng = position.longitude;
@@ -48,16 +61,37 @@ class _GPSState extends State<GPS> {
     Geolocator.getPositionStream(
       locationSettings: LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 5,
+        distanceFilter: 1,
       ),
     ).listen((Position position) {
-      if (!position.latitude.isFinite || !position.longitude.isFinite) return;
+      if (!position.latitude.isFinite || !position.longitude.isFinite) {
+        return;
+      }
+
       setState(() {
         lat = position.latitude;
         lng = position.longitude;
+
+        // Aya
         if (isTracking) {
-          routePoints.add(LatLng(position.latitude, position.longitude));
+          double currentSpeed = position.speed * 3.6;
+
+          if (currentSpeed < 3) {
+            movement = "Standing";
+          } else if (currentSpeed < 8) {
+            movement = "Walking";
+          } else {
+            movement = "Running";
+          }
         }
+        // Aya
+
+        if (isTracking) {
+          routePoints.add(
+            LatLng(position.latitude, position.longitude),
+          );
+        }
+
         status = "Live Tracking";
       });
     });
@@ -77,53 +111,67 @@ class _GPSState extends State<GPS> {
         backgroundColor: Colors.grey[900],
         centerTitle: true,
       ),
-      body: FlutterMap(
-        options: MapOptions(
-          initialCenter: LatLng(29.3099, 30.8418),
-          initialZoom: 15,
-          interactionOptions: const InteractionOptions(
-            flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
-          ),
-        ),
+
+      body: Column(
         children: [
-          TileLayer(
-            tileProvider: AssetTileProvider(),
-            urlTemplate: 'assets/tiles/{z}/{x}/{y}.png',
-            errorTileCallback: (tile, error, stackTrace) {},
-          ),
-          if (lat != null && lng != null)
-            if (lat != null && lng != null && lat!.isFinite && lng!.isFinite)
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    point: LatLng(lat!, lng!),
-                    width: 40,
-                    height: 40,
-                    child: Icon(Icons.location_pin, color: Colors.red, size: 40),
-                  ),
-                ],
+          //Aya
+          if (isTracking)
+            Text(
+              movement,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
-          if (routePoints.length >= 2)
-            if (routePoints.length >= 2)
-              Builder(
-                builder: (context) {
-                  try {
-                    return PolylineLayer(
-                      polylines: [
-                        Polyline(
-                          points: routePoints,
-                          strokeWidth: 4,
-                          color: Colors.blue,
+            ),
+          //Aya
+          Expanded(
+            child: FlutterMap(
+              options: MapOptions(
+                initialCenter: LatLng(29.3099, 30.8418),
+                initialZoom: 15,
+                interactionOptions: const InteractionOptions(
+                  flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                ),
+              ),
+              children: [
+                TileLayer(
+                  tileProvider: AssetTileProvider(),
+                  urlTemplate: 'assets/tiles/{z}/{x}/{y}.png',
+                  errorTileCallback: (tile, error, stackTrace) {},
+                ),
+
+                if (lat != null && lng != null)
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        point: LatLng(lat!, lng!),
+                        width: 40,
+                        height: 40,
+                        child: Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 40,
                         ),
-                      ],
-                    );
-                  } catch (e) {
-                    return SizedBox.shrink();
-                  }
-                },
-              ),
+                      ),
+                    ],
+                  ),
+
+                if (routePoints.length >= 2)
+                  PolylineLayer(
+                    polylines: [
+                      Polyline(
+                        points: routePoints,
+                        strokeWidth: 4,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
+
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           setState(() {
@@ -136,9 +184,14 @@ class _GPSState extends State<GPS> {
             }
           });
         },
+
         backgroundColor: isTracking ? Colors.red : Colors.green,
+
         label: Text(isTracking ? 'Stop' : 'Start'),
-        icon: Icon(isTracking ? Icons.stop : Icons.play_arrow),
+
+        icon: Icon(
+          isTracking ? Icons.stop : Icons.play_arrow,
+        ),
       ),
     );
   }
