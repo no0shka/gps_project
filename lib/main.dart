@@ -108,12 +108,6 @@ class _GPSState extends State<GPS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('GPS', style: TextStyle(color: Colors.amberAccent)),
-        backgroundColor: Colors.grey[900],
-        centerTitle: true,
-      ),
-
       body: Column(
         children: [
           //Aya
