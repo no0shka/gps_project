@@ -76,12 +76,14 @@ class _GPSState extends State<GPS> {
         if (isTracking) {
           double currentSpeed = position.speed * 3.6;
 
-          if (currentSpeed < 3) {
+          if (currentSpeed < 2) {
             movement = "Standing";
-          } else if (currentSpeed < 8) {
+          } else if (currentSpeed < 7) {
             movement = "Walking";
-          } else {
+          } else if (currentSpeed < 15) {
             movement = "Running";
+          } else {
+            movement = "Driving";
           }
         }
         // Aya
