@@ -80,6 +80,8 @@ class _GPSState extends State<GPS> {
             movement = "Standing";
           } else if (currentSpeed < 7) {
             movement = "Walking";
+          }else if (currentSpeed < 10) {
+            movement = "Jogging";
           } else if (currentSpeed < 15) {
             movement = "Running";
           } else {
